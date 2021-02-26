@@ -1,0 +1,33 @@
+Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FloatingActionButton(
+                  backgroundColor: Colors.red,
+                  child: Icon(Icons.arrow_back, color: Colors.white,),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context)=>HomePage(),
+                    ));
+                  },
+                ),
+                SizedBox(width: 30,),
+                FloatingActionButton(
+                  backgroundColor: Colors.lightGreenAccent,
+                  child: Icon(Icons.done, color: Colors.white,),
+                  onPressed: (){
+                    Navigator.push(context, MaterialPageRoute(
+                        builder: (context)=> Scaffold(
+                          body: Container(
+                              decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.topRight, end: Alignment.bottomCenter,
+                                      colors: [Colors.greenAccent, Colors.blue, Colors.blue]
+                                  )
+                              ),
+                              child: HomePage(locationOne: areaOne,)),
+                        )
+                    ));
+                  },
+                ),
+              ],
+            )
