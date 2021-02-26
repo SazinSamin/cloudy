@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SecondaryTile extends StatelessWidget {
 
+
   SecondaryTile({this.feelLike, this.humidity, this.windSpeed, this.visibility, this.cloud, this.pressure, this.windDegree, this.lat, this.long, this.sunrise, this.sunset});
 
   var feelLike;
