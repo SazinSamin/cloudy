@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SecondaryTile extends StatelessWidget {
 
-  SecondaryTile({this.feelLike, this.humidity, this.windSpeed, this.visibility, this.cloud, this.pressure, this.windDegree, this.lat, this.long, this.sunrise, this.sunset});
+  SecondaryTile({this.feelLike, this.humidity, this.windSpeed, this.visibility, this.cloud, this.pressure, this.windDegree, this.lat, this.long, this.sunrise, this.sunset, this.tempMax, this.tempMin});
 
   var feelLike;
   var humidity;
@@ -18,9 +18,10 @@ class SecondaryTile extends StatelessWidget {
   var long;
   var sunrise;
   var sunset;
+  var tempMax;
+  var tempMin;
 
   @override
-
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(15, 1, 15, 5),
@@ -67,6 +68,12 @@ class SecondaryTile extends StatelessWidget {
               SecondaryWidget(icon: FontAwesomeIcons.sun,
                 dataName: "sunset", dataValue: sunset.toString(),
               ),
+              SecondaryWidget(icon: FontAwesomeIcons.sun,
+                dataName: "temp max", dataValue: tempMax.toString(),
+              ),
+              SecondaryWidget(icon: FontAwesomeIcons.sun,
+                dataName: "temp min", dataValue: tempMin.toString(),
+              )
             ],
           ),
         ),

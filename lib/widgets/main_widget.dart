@@ -4,9 +4,10 @@ import 'package:flutter/rendering.dart';
 
 class MainWidget extends StatefulWidget {
 
-  MainWidget({this.areaName, this.temp, this.des});
+  MainWidget({this.areaName, this.country, this.temp, this.des});
 
   var areaName;
+  var country;
   var temp;
   var des;
 
@@ -26,9 +27,15 @@ class _MainWidgetState extends State<MainWidget> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(widget.areaName.toString(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(widget.areaName.toString(),
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.subtitle1.copyWith(color: Colors.white, fontSize: 25)),
+              Text(", ${widget.country.toString()}"),
+            ],
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [Text(widget.temp.toString() + '\u00B0', style: Theme.of(context).textTheme.headline1.copyWith(color: Colors.white)),

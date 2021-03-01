@@ -1,10 +1,9 @@
-import 'package:cloudy/ErrorPage.dart';
-import 'package:cloudy/LocationChange/demo1.dart';
+import 'package:cloudy/LocationChange/Location_change.dart';
+import 'package:cloudy/loading/loading.dart';
 import 'package:cloudy/sunrise_and_set/SunTime.dart';
 import 'package:cloudy/widgets/main_widget.dart';
 import 'package:cloudy/button_widget/positioned_2.dart';
 import 'package:cloudy/second_ListTile.dart';
-import 'package:cloudy/welcome_page/welcom%20page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -12,7 +11,9 @@ import 'dart:convert';
 class HomePage extends StatefulWidget {
 
   String locationOne;
-  HomePage({this.locationOne});
+  var apiData;
+
+  HomePage({this.locationOne, this.apiData});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -40,8 +41,11 @@ class _HomePageState extends State<HomePage> {
   var sunset;
   var sunrise;
 
-  var sr;
-  var ss;
+  var tempMax;
+  var tempMin;
+
+  var country;
+
 
   //Force this methods for run first
   @override
@@ -63,11 +67,14 @@ class _HomePageState extends State<HomePage> {
   }
 
 
+
+
   //http response from the api
   Future getWeather() async {
     http.Response response = await http.get(
         "http://api.openweathermap.org/data/2.5/weather?q=${area ==null ? "Jhenaidah" : widget.locationOne}&appid=263241df63fdd1b6dd713b14834fb2eb");
-    var result = jsonDecode(response.body);
+    
+   var result = jsonDecode(response.body);
 
     setState(() {
       // Main widget variable data collection
@@ -86,22 +93,29 @@ class _HomePageState extends State<HomePage> {
       this.lat = result['coord']['lat'];
       this.long = result['coord']['lon'];
 
-      var getSunTimeValue = result['sys']['sunset'];
       this.sunrise = SunTime(result['sys']['sunrise']).Execute();
       this.sunset = SunTime(result['sys']['sunset']).Execute();
-      print("The value here : $sunrise");
-      print("The value here : $sunset");
+
+      this.tempMax = ((result['main']['temp_max']) - 273.15).round();
+      this.tempMin =((result['main']['temp_min']) - 273.15).round();
+
+      this.country = result['sys']['country'];
+
+      debugPrint(this.tempMax.toString());
+
     });
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topRight, end: Alignment.bottomCenter,
-                colors: [Colors.indigo, Colors.indigo, Colors.blue]
+                colors: [Colors.lightBlue,  Colors.blue[900]]
             )
         ),
         child: temp != null
@@ -115,6 +129,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     MainWidget(
                       areaName: areaName,
+                      country: country,
                       temp: temp,
                       des: des,
                     ),
@@ -130,6 +145,8 @@ class _HomePageState extends State<HomePage> {
                       long: long,
                       sunrise: sunrise,
                       sunset: sunset,
+                      tempMax: tempMax,
+                      tempMin: tempMin,
                     ),
                   ],
                 ),
@@ -154,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               )
-            : WelcomePage(),
+            : LoadingState(),
       ),
     );
   }
